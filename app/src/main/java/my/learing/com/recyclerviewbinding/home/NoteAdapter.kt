@@ -9,17 +9,15 @@ import my.learing.com.recyclerviewbinding.database.NoteItem
 import my.learing.com.recyclerviewbinding.databinding.NoteItemLayoutBinding
 
 class NoteAdapter(private val onClickItemListener: OnClickItemListener) :
-    ListAdapter<NoteItem, RecyclerView.ViewHolder>(NoteCallBack()) {
+    ListAdapter<NoteItem, NoteAdapter.NoteHolder>(NoteCallBack()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
         return NoteHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is NoteHolder) {
+    override fun onBindViewHolder(holder: NoteHolder, position: Int) {
             val item = getItem(position)
             holder.bind(item, onClickItemListener = onClickItemListener)
-        }
     }
 
     class NoteHolder private constructor(private val noteItemLayoutBinding: NoteItemLayoutBinding) :
