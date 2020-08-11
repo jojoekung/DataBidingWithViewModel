@@ -8,8 +8,7 @@ import my.learing.com.recyclerviewbinding.database.NoteDao
 import my.learing.com.recyclerviewbinding.database.NoteItem
 
 class HomeViewModel(
-    dataSource: NoteDao,
-    application: Application
+    dataSource: NoteDao
 ) : ViewModel() {
 
     private val database = dataSource

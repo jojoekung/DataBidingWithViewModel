@@ -12,7 +12,9 @@ class NoteAdapter(private val onClickItemListener: OnClickItemListener) :
     ListAdapter<NoteItem, NoteAdapter.NoteHolder>(NoteCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteHolder {
-        return NoteHolder.from(parent)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = NoteItemLayoutBinding.inflate(inflater, parent, false)
+        return NoteHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NoteHolder, position: Int) {
@@ -20,21 +22,13 @@ class NoteAdapter(private val onClickItemListener: OnClickItemListener) :
             holder.bind(item, onClickItemListener = onClickItemListener)
     }
 
-    class NoteHolder private constructor(private val noteItemLayoutBinding: NoteItemLayoutBinding) :
+    class NoteHolder(private val noteItemLayoutBinding: NoteItemLayoutBinding) :
         RecyclerView.ViewHolder(noteItemLayoutBinding.root) {
 
         fun bind(item: NoteItem, onClickItemListener: OnClickItemListener) {
             noteItemLayoutBinding.note = item
             noteItemLayoutBinding.listener = onClickItemListener
             noteItemLayoutBinding.executePendingBindings()
-        }
-
-        companion object {
-            fun from(parent: ViewGroup): NoteHolder {
-                val inflater = LayoutInflater.from(parent.context)
-                val binding = NoteItemLayoutBinding.inflate(inflater, parent, false)
-                return NoteHolder(binding)
-            }
         }
     }
 

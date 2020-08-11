@@ -25,11 +25,10 @@ class HomeFragment : Fragment() {
         val binding: HomeFragmentBinding =
             DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
 
-        val application = requireNotNull(this.activity).application
         val dataSource = NoteDatabase.getInstance(requireContext()).noteDao
 
         val viewModelFactory =
-            HomeViewModelFactory(dataSource = dataSource, application = application)
+            HomeViewModelFactory(dataSource = dataSource)
         val homeViewModel =
             ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
@@ -52,8 +51,8 @@ class HomeFragment : Fragment() {
         })
         binding.rcvNote.adapter = adapter
 
-        homeViewModel.mNote.observe(viewLifecycleOwner, Observer {
-            it?.let {
+        homeViewModel.mNote.observe(viewLifecycleOwner, Observer { note ->
+            note?.let {
                 adapter.submitList(it)
             }
         })
