@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
+import my.learing.com.recyclerviewbinding.R
 import my.learing.com.recyclerviewbinding.database.NoteDao
 import my.learing.com.recyclerviewbinding.database.NoteItem
 
@@ -37,14 +38,17 @@ class NoteDetailViewModel(
         _note = dao.getNoteById(noteId)
     }
 
-    fun onDeleteNote(id: Long) {
+    fun getNoteTitle(): String {
+        val title = context.getString(R.string.title)
+        return String.format("%s: %s", title, _note.value?.title)
+    }
+
+    fun onDeleteNote() {
         uiScope.launch {
-            deleteNoteById(id)
+            deleteNoteById(noteId)
         }
         backToHome()
     }
-
-    fun getNoteId() = noteId
 
     private suspend fun deleteNoteById(id: Long) {
         withContext(Dispatchers.IO) {
