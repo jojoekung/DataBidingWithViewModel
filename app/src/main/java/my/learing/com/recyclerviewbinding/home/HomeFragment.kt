@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
         homeViewModel.isNavigateToAddNote.observe(viewLifecycleOwner, Observer {
             it?.let {
                 this.findNavController()
-                    .navigate(R.id.action_homeFragment_to_addFragment, Bundle())
+                    .navigate(R.id.action_homeFragment_to_addFragment)
                 homeViewModel.doneNavigateToAddNote()
             }
         })

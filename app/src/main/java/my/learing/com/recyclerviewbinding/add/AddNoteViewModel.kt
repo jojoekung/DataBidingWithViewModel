@@ -18,7 +18,7 @@ class AddNoteViewModel(
     var title = MutableLiveData<String>("")
     var noteDetail = MutableLiveData<String>("")
 
-    private var _note = dataSource.getNoteById(noteId)
+    private val _note = dataSource.getNoteById(noteId)
 
     private var _isSaveNote = MutableLiveData<Boolean>()
     val isSaveNote: LiveData<Boolean>
@@ -31,6 +31,12 @@ class AddNoteViewModel(
 
     val note: LiveData<NoteItem>
         get() = _note
+
+    init {
+        noteId?.let {
+            isEditNote = true
+        }
+    }
 
     fun onSave() {
         uiScope.launch {

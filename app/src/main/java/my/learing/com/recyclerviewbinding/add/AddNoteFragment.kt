@@ -54,7 +54,6 @@ class AddNoteFragment : Fragment() {
             it?.let {
                 addNoteViewModel.title.postValue(it.title)
                 addNoteViewModel.noteDetail.postValue(it.note)
-                addNoteViewModel.isEditNote = true
             }
         })
 
