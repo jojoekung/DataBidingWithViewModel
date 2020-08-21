@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import my.learing.com.recyclerviewbinding.MyApplication
 import my.learing.com.recyclerviewbinding.R
+import my.learing.com.recyclerviewbinding.database.NoteDao
 import my.learing.com.recyclerviewbinding.database.NoteDatabase
 import my.learing.com.recyclerviewbinding.databinding.HomeFragmentBinding
 import javax.inject.Inject
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class HomeFragment : Fragment() {
 
     @Inject
-    lateinit var user: User
+    lateinit var homeViewModelFactory: HomeViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,18 +33,12 @@ class HomeFragment : Fragment() {
         val binding: HomeFragmentBinding =
             DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
 
-        val dataSource = NoteDatabase.getInstance(requireContext()).noteDao
-
-        val viewModelFactory =
-            HomeViewModelFactory(dataSource = dataSource)
         val homeViewModel =
-            ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+            ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
 
         binding.homeViewModel = homeViewModel
 
         binding.lifecycleOwner = this
-
-        Toast.makeText(requireContext(), "Username : ${user.name}", Toast.LENGTH_SHORT).show()
 
         homeViewModel.isNavigateToAddNote.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -71,8 +66,8 @@ class HomeFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
-        (requireActivity().application as MyApplication).appComponent.homeComponent().create()
-            .inject(this)
+
+        (requireActivity().application as MyApplication).appComponent.inject(this)
         super.onAttach(context)
     }
 }

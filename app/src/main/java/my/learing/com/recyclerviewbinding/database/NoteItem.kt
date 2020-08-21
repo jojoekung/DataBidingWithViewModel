@@ -16,3 +16,5 @@ data class NoteItem(
     @ColumnInfo(name = "title")
     var title: String
 )
+
+const val NOTE_ID = "noteId"

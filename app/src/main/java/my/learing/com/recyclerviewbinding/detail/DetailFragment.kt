@@ -1,5 +1,6 @@
 package my.learing.com.recyclerviewbinding.detail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import my.learing.com.recyclerviewbinding.MyApplication
 import my.learing.com.recyclerviewbinding.R
 import my.learing.com.recyclerviewbinding.database.NoteDatabase
 import my.learing.com.recyclerviewbinding.databinding.DetailFragmentBinding
+import javax.inject.Inject
 
 class DetailFragment : Fragment() {
 
@@ -51,5 +54,10 @@ class DetailFragment : Fragment() {
         binding.lifecycleOwner = this
 
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        (requireActivity().application as MyApplication).appComponent.inject(this)
+        super.onAttach(context)
     }
 }
